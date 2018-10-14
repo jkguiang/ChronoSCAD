@@ -10,23 +10,23 @@ module drawSensors(face) {
 		if (x <= endcapOuterRadius) {
 			if (inc%2 == 0) {
 				// X-axis Placement
-				drawEvenQuadrant(x, yMax, yMin, sensorHalfWidth);
+				drawEvenQuadrants(x, yMax, yMin, sensorHalfWidth);
 				// Y-axis Placement
 				rotate([0,0,90])
-				drawEvenQuadrant(x, yMax, yMin, sensorHalfWidth);
+				drawEvenQuadrants(x, yMax, yMin, sensorHalfWidth);
 			}
 			else {
 				// X Axis Placement
-				drawOddQuadrant(x, yMax, yMin, sensorHalfWidth);
+				drawOddQuadrants(x, yMax, yMin, sensorHalfWidth);
 				// Y-axis Placement
 				rotate([0,0,90])
-				drawOddQuadrant(x, yMax, yMin, sensorHalfWidth);
+				drawOddQuadrants(x, yMax, yMin, sensorHalfWidth);
 			}	
 		}
 	}
 }
 
-module drawEvenQuadrant(x, yMax, yMin, sensorHalfWidth) {
+module drawEvenQuadrants(x, yMax, yMin, sensorHalfWidth) {
 	for (y=[yMin:sensorLength:yMax]) {
 		if (y+sensorLength <= yMax) {
 			SensorHalfLeft(x,y);
@@ -35,7 +35,7 @@ module drawEvenQuadrant(x, yMax, yMin, sensorHalfWidth) {
 	}
 }
 
-module drawOddQuadrant(x, yMax, yMin, sensorHalfWidth) {
+module drawOddQuadrants(x, yMax, yMin, sensorHalfWidth) {
 	for (y=[yMin:sensorLength:yMax]) {
 		if (y+sensorLength <= yMax) {
 			SensorHalfRight(x,y);
