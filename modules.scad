@@ -24,36 +24,36 @@ module axes() {
 }
 
 // Sensor Modules
-module LGAD(x,y,face) {
-	translate([x,y,(endcapThick/2+sensorThick/2)*face])
+module LGAD(x,y) {
+	translate([x,y,(endcapThick/2+sensorThick/2)])
 	cube([lgadWidth, sensorLength, sensorThick]);
 }
-module Circuitry(x,y,face) {
+module Circuitry(x,y) {
 // Sensor
 	color("LightSkyBlue")
-	translate([x,y,(endcapThick/2+sensorThick/2)*face])
+	translate([x,y,(endcapThick/2+sensorThick/2)])
 	cube([circuitWidth, sensorLength, sensorThick]);	
 }
-module Sensor(x,y,face) {
+module Sensor(x,y) {
 	union() {
-		Circuitry(x,y,face);
-		LGAD(x+circuitWidth,y,face);
-		LGAD(x+circuitWidth+lgadWidth,y,face);
-		Circuitry(x+circuitWidth+lgadWidth*2,y,face);
+		Circuitry(x,y);
+		LGAD(x+circuitWidth,y);
+		LGAD(x+circuitWidth+lgadWidth,y);
+		Circuitry(x+circuitWidth+lgadWidth*2,y);
 	}
 }
-module SensorHalfRight(x,y,face) {
+module SensorHalfRight(x,y) {
 	union() {
-		Circuitry(x,y,face);
+		Circuitry(x,y);
 		color("ForestGreen")
-		LGAD(x+circuitWidth,y,face);
+		LGAD(x+circuitWidth,y);
 	}	
 }
-module SensorHalfLeft(x,y,face) {
+module SensorHalfLeft(x,y) {
 	union() {
 		color("DarkGreen")
-		LGAD(x,y,face);
-		Circuitry(x+lgadWidth,y,face);
+		LGAD(x,y);
+		Circuitry(x+lgadWidth,y);
 	}	
 }
 
