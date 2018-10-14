@@ -1,4 +1,5 @@
 # ChronoSCAD
+![alt text](https://github.com/jkguiang/ChronoSCAD/blob/master/docs/endcap-axes-sensors.png)
 ## Legend
 ```cpp
 // Variable name mapping to x,y,z dimensions
@@ -15,14 +16,11 @@ back = -1    // -z-direction
 drawSensors(face)
     int face = front (1), back (-1)
 ```
-![alt text](https://github.com/jkguiang/ChronoSCAD/blob/master/docs/endcap-axes-sensors.png)
 ```cpp
 // Draw endcap
 Endcap()
 ```
-![alt text](https://github.com/jkguiang/ChronoSCAD/blob/master/docs/endcap.png)
 ```cpp
 // Draw axes
 axes()
 ```
-![alt text](https://github.com/jkguiang/ChronoSCAD/blob/master/docs/endcap-axes.png)
