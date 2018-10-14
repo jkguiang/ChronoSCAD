@@ -1,21 +1,6 @@
-/* --------- Legend ---------
-Dimensions:
-  Length <--> x
-  Width <--> y
-  Thick <--> z
-*/
-// Sensor Parameters
-lgadWidth = 2;
-circuitWidth = 2;
-sensorLength = 4;
-sensorThick = 0.1;
+// Arbitrary, binary face definitions
 front = 1;
 back = -1;
-// Endcap Parameters
-endcapOuterRadius = 100;
-endcapInnerRadius = 20;
-endcapThick = 5;
-
 
 // Utility Modules
 module xAxis() {
@@ -37,7 +22,6 @@ module axes() {
 		zAxis();		
 	}
 }
-axes();
 
 // Sensor Modules
 module LGAD(x,y,face) {
@@ -46,7 +30,7 @@ module LGAD(x,y,face) {
 }
 module Circuitry(x,y,face) {
 // Sensor
-	color("LightSkyBlue", 0.75)
+	color("LightSkyBlue")
 	translate([x,y,(endcapThick/2+sensorThick/2)*face])
 	cube([circuitWidth, sensorLength, sensorThick]);	
 }
@@ -72,9 +56,9 @@ module SensorHalfLeft(x,y,face) {
 		Circuitry(x+lgadWidth,y,face);
 	}	
 }
+
 // Endcap Modules
 module EndcapFace(face) {
-// Endcap
 	translate([0, 0, (endcapThick/4)*face])
 	difference() {
 		cylinder(h=endcapThick/2,         // Endcap
@@ -85,12 +69,12 @@ module EndcapFace(face) {
 		         center=true);
 	}
 }
+// Endcap
 module Endcap() {
 	union() {
-		color("LightCyan")    // Front
-		EndcapFace(front);
+		color("LightCyan")    
+		EndcapFace(front);   // Front
 		color("LightSalmon")
-		EndcapFace(back);	  // Back
+		EndcapFace(back);	 // Back
 	}
 }
-Endcap();
