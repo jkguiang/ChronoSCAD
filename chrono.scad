@@ -6,9 +6,11 @@ Legend:
   Length <--> x
   Width <--> y
   Thick <--> z
+  front = 1
+  back = -1
 Modules:
   # Draw sensors on the front (Cyan) or back (Salmon) side of the endcap
-  placeSensors(face)
+  drawSensors(face)
 	face = front, back
   # Draw endcap
   Endcap()
