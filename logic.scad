@@ -13,7 +13,7 @@ module drawSensors(face) {
 				for (y=[yMin:sensorLength:yMax]) {
 					if (y+sensorLength <= yMax) {
 						SensorHalfLeft(x,y);
-						SensorHalfLeft(-x-sensorHalfWidth,-y-sensorLength);
+						SensorHalfRight(-x-sensorHalfWidth,-y-sensorLength);
 					}
 				}
 				// Y-axis Placement
@@ -22,7 +22,7 @@ module drawSensors(face) {
 						rotate([0,0,90])
 						SensorHalfLeft(x,y);
 						rotate([0,0,90])
-						SensorHalfLeft(-x-sensorHalfWidth,-y-sensorLength);
+						SensorHalfRight(-x-sensorHalfWidth,-y-sensorLength);
 					}
 				}
 			}
@@ -31,7 +31,7 @@ module drawSensors(face) {
 				for (y=[yMin:sensorLength:yMax]) {
 					if (y+sensorLength <= yMax) {
 						SensorHalfRight(x,y);
-						SensorHalfRight(-x-sensorHalfWidth,-y-sensorLength);
+						SensorHalfLeft(-x-sensorHalfWidth,-y-sensorLength);
 					}
 				}
 				// Y-axis Placement
@@ -40,7 +40,7 @@ module drawSensors(face) {
 						rotate([0,0,90])
 						SensorHalfRight(x,y);
 						rotate([0,0,90])
-						SensorHalfRight(-x-sensorHalfWidth,-y-sensorLength);
+						SensorHalfLeft(-x-sensorHalfWidth,-y-sensorLength);
 					}
 				}
 			}	

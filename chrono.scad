@@ -27,6 +27,8 @@ endcapOuterRadius = 120;
 endcapInnerRadius = 20;
 endcapThick = 5;
 
+// Drawing
+axes();
 drawSensors(front);
 drawSensors(back);
 Endcap();
