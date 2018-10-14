@@ -25,13 +25,13 @@ module axes() {
 
 // Sensor Modules
 module LGAD(x,y) {
-	translate([x,y,(endcapThick/2+sensorThick/2)])
+	translate([x,y,(endcapThick/2)])
 	cube([lgadWidth, sensorLength, sensorThick]);
 }
 module Circuitry(x,y) {
 // Sensor
 	color("LightSkyBlue")
-	translate([x,y,(endcapThick/2+sensorThick/2)])
+	translate([x,y,(endcapThick/2)])
 	cube([circuitWidth, sensorLength, sensorThick]);	
 }
 module Sensor(x,y) {
