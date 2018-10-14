@@ -15,14 +15,14 @@ back = -1    // -z-direction
 drawSensors(face)
     int face = front (1), back (-1)
 ```
-[[docs/endcap-axes-sensors.png]]
+![alt text](https://github.com/jkguiang/ChronoSCAD/blob/master/docs/endcap-axes-sensors.png)
 ```cpp
 // Draw endcap
 Endcap()
 ```
-[[docs/endcap.png]]
+![alt text](https://github.com/jkguiang/ChronoSCAD/blob/master/docs/endcap.png)
 ```cpp
 // Draw axes
 axes()
 ```
-[[docs/endcap-axes.png]]
+![alt text](https://github.com/jkguiang/ChronoSCAD/blob/master/docs/endcap-axes.png)
