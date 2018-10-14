@@ -1,8 +1,8 @@
 // Sensor Placement Logic
 module drawSensors(face) {
 	sensorHalfWidth = lgadWidth+circuitWidth;
-	angle = (face == 1) ? 0 : 180;
-	rotate([0,angle,0])
+	zDisp = (face == 1) ? 0 : -(sensorThick+endcapThick);
+	translate([0,0,zDisp])
 	for(inc=[0:1:endcapOuterRadius]) {
 		x = inc*(sensorHalfWidth);
 		yMax = pow(pow(endcapOuterRadius, 2)-pow(x+(sensorHalfWidth),2), 0.5);
@@ -10,36 +10,48 @@ module drawSensors(face) {
 		if (x <= endcapOuterRadius) {
 			if (inc%2 == 0) {
 				// X-axis Placement
-				drawEvenQuadrants(x, yMax, yMin, sensorHalfWidth);
+				drawEvenQuadrants(x, yMax, yMin, sensorHalfWidth, face);
 				// Y-axis Placement
 				rotate([0,0,90])
-				drawEvenQuadrants(x, yMax, yMin, sensorHalfWidth);
+				drawEvenQuadrants(x, yMax, yMin, sensorHalfWidth, face);
 			}
 			else {
 				// X Axis Placement
-				drawOddQuadrants(x, yMax, yMin, sensorHalfWidth);
+				drawOddQuadrants(x, yMax, yMin, sensorHalfWidth, face);
 				// Y-axis Placement
 				rotate([0,0,90])
-				drawOddQuadrants(x, yMax, yMin, sensorHalfWidth);
+				drawOddQuadrants(x, yMax, yMin, sensorHalfWidth, face);
 			}	
 		}
 	}
 }
 
-module drawEvenQuadrants(x, yMax, yMin, sensorHalfWidth) {
+module drawEvenQuadrants(x, yMax, yMin, sensorHalfWidth, face) {
 	for (y=[yMin:sensorLength:yMax]) {
 		if (y+sensorLength <= yMax) {
-			SensorHalfLeft(x,y);
-			SensorHalfRight(-x-sensorHalfWidth,-y-sensorLength);
+			if (face == front) {
+				SensorHalfLeft(x,y);
+				SensorHalfRight(-x-sensorHalfWidth,-y-sensorLength);				
+			}
+			else {
+				SensorHalfRight(x,y);
+				SensorHalfLeft(-x-sensorHalfWidth,-y-sensorLength);					
+			}
 		}
 	}
 }
 
-module drawOddQuadrants(x, yMax, yMin, sensorHalfWidth) {
+module drawOddQuadrants(x, yMax, yMin, sensorHalfWidth, face) {
 	for (y=[yMin:sensorLength:yMax]) {
 		if (y+sensorLength <= yMax) {
-			SensorHalfRight(x,y);
-			SensorHalfLeft(-x-sensorHalfWidth,-y-sensorLength);
+			if (face == front) {
+				SensorHalfRight(x,y);
+				SensorHalfLeft(-x-sensorHalfWidth,-y-sensorLength);				
+			}
+			else {
+				SensorHalfLeft(x,y);
+				SensorHalfRight(-x-sensorHalfWidth,-y-sensorLength);	
+			}
 		}
 	}
 }
