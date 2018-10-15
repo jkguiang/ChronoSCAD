@@ -20,17 +20,17 @@ Modules:
 
 // Sensor Parameters
 lgadWidth = 2;
-circuitWidth = 2;
+circuitWidth = 1;
 sensorLength = 4;
 sensorThick = 0.1;
+showCircuits = false;
 
 // Endcap Parameters
 endcapOuterRadius = 120;
-endcapInnerRadius = 20;
+endcapInnerRadius = 40;
 endcapThick = 5;
 
 // Drawing
-axes();
 drawSensors(front);
 drawSensors(back);
 Endcap();

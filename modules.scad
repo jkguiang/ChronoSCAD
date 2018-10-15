@@ -29,11 +29,13 @@ module LGAD(x,y) {
 	cube([lgadWidth, sensorLength, sensorThick]);
 }
 module Circuitry(x,y) {
-// Sensor
-	color("LightSkyBlue")
-	translate([x,y,(endcapThick/2)])
-	cube([circuitWidth, sensorLength, sensorThick]);	
+	if (showCircuits) {
+		color("LightSkyBlue")
+		translate([x,y,(endcapThick/2)])
+		cube([circuitWidth, sensorLength, sensorThick]);			
+	}
 }
+// Sensor
 module Sensor(x,y) {
 	union() {
 		Circuitry(x,y);
