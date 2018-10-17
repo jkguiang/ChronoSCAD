@@ -25,8 +25,15 @@ module axes() {
 
 // Sensor Modules
 module LGAD(x,y) {
-	translate([x,y,(endcapThick/2)])
-	cube([lgadWidth, sensorLength, sensorThick]);
+	if (flat) {
+		translate([x,y,(endcapThick/2+sensorThick)])
+		square([lgadWidth, sensorLength]);	
+	}
+	else {
+		translate([x,y,(endcapThick/2)])
+		cube([lgadWidth, sensorLength, sensorThick]);
+	}
+
 }
 module Circuitry(x,y) {
 	if (showCircuits) {

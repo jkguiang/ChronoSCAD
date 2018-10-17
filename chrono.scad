@@ -26,15 +26,16 @@ sensorLength = 42.6;
 sensorThick = 1;
 showCircuits = false;
 zOffset = 3000;
+flat = false;
 
 // Endcap Parameters
 endcapOuterRadius = 1270;
 endcapInnerRadius = 315;
-endcapThick = 10;
+endcapThick = (0.25*25.4);
 
 // Drawing
-module toDraw() {
-	Endcap();
+module Detector() {
+	//Endcap();
 	drawSensors(front);
 	drawSensors(back);
 	//SensorHalfLeft();
@@ -51,4 +52,4 @@ module toDraw() {
 }
 
 translate([0,0,zOffset])
-toDraw();
+Detector();
