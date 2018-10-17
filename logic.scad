@@ -4,7 +4,7 @@ module drawSensors(face) {
 	zDisp = (face == 1) ? 0 : -(sensorThick+endcapThick);
 	translate([0,0,zDisp])
 	for(inc=[0:1:endcapOuterRadius]) {
-		x = inc*(sensorHalfWidth);
+		x = inc*(sensorHalfWidth)+0.5;
 		yMax = pow(pow(endcapOuterRadius, 2)-pow(x+(sensorHalfWidth),2), 0.5);
 		yMin = (x <= endcapInnerRadius) ? pow(pow(endcapInnerRadius, 2)-pow(x,2), 0.5) : 0;
 		if (x <= endcapOuterRadius) {
@@ -27,8 +27,8 @@ module drawSensors(face) {
 }
 
 module drawEvenQuadrants(x, yMax, yMin, sensorHalfWidth, face) {
-	for (y=[yMin:sensorLength:yMax]) {
-		if (y+sensorLength <= yMax) {
+	for (y=[yMin:sensorLength+0.5:yMax]) {
+		if (y+sensorLength+0.5 <= yMax) {
 			if (face == front) {
 				SensorHalfLeft(x,y);
 				SensorHalfRight(-x-sensorHalfWidth,-y-sensorLength);				
@@ -42,8 +42,8 @@ module drawEvenQuadrants(x, yMax, yMin, sensorHalfWidth, face) {
 }
 
 module drawOddQuadrants(x, yMax, yMin, sensorHalfWidth, face) {
-	for (y=[yMin:sensorLength:yMax]) {
-		if (y+sensorLength <= yMax) {
+	for (y=[yMin:sensorLength+0.5:yMax]) {
+		if (y+sensorLength+0.5 <= yMax) {
 			if (face == front) {
 				SensorHalfRight(x,y);
 				SensorHalfLeft(-x-sensorHalfWidth,-y-sensorLength);				
