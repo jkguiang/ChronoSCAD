@@ -1,7 +1,8 @@
 include <./modules.scad>;
 include <./logic.scad>;
 
-/* --------- ChronoSCAD ---------
+/* ---------- ChronoSCAD ----------
+   -> All measurements are in mm <-
 Legend:
   Length <--> x
   Width <--> y
@@ -19,18 +20,35 @@ Modules:
 */
 
 // Sensor Parameters
-lgadWidth = 2;
-circuitWidth = 1;
-sensorLength = 4;
-sensorThick = 0.1;
+lgadWidth = 21.8;
+circuitWidth = 10;
+sensorLength = 42.6;
+sensorThick = 1;
 showCircuits = false;
+zOffset = 3000;
 
 // Endcap Parameters
-endcapOuterRadius = 120;
-endcapInnerRadius = 40;
-endcapThick = 5;
+endcapOuterRadius = 1270;
+endcapInnerRadius = 315;
+endcapThick = 10;
 
 // Drawing
-drawSensors(front);
-drawSensors(back);
-Endcap();
+module toDraw() {
+	Endcap();
+	drawSensors(front);
+	drawSensors(back);
+	//SensorHalfLeft();
+	//translate([0,sensorLength,0])
+	//SensorHalfLeft();
+	//rotate(a=[0,0,90])
+	//SensorHalfLeft();
+	//
+	//translate([lgadWidth+1,0,0])
+	//SensorHalfLeft();
+	//translate([lgadWidth+1,sensorLength,0])
+	//SensorHalfLeft();
+	//axes();	
+}
+
+translate([0,0,zOffset])
+toDraw();
