@@ -54,13 +54,13 @@ module Sensor(x,y) {
 module SensorHalfRight(x,y) {
 	union() {
 		Circuitry(x,y);
-		color("ForestGreen")
+		color("MediumBlue")
 		LGAD(x+circuitWidth,y);
 	}	
 }
 module SensorHalfLeft(x,y) {
 	union() {
-		color("DarkGreen")
+		color("RoyalBlue")
 		LGAD(x,y);
 		Circuitry(x+lgadWidth,y);
 	}	
@@ -83,7 +83,7 @@ module Endcap() {
 	union() {
 		color("LightCyan")    
 		EndcapFace(front);   // Front
-		color("LightSalmon")
+		color("PaleTurquoise")
 		EndcapFace(back);	 // Back
 	}
 }

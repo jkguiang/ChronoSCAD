@@ -1,13 +1,13 @@
 include <./tracks.scad>;
 
-module DrawCollision() {
-	color("Red")
-	sphere(r=40);
+module Collision() {
+	color("DarkGrey")
+	sphere(r=30);
 }
 
-module DrawTrajectory(points, pointsLength, intersect, pt) {
+module Trajectory(points, pointsLength, intersect, pt) {
 	for ( i = [0:1:pointsLength-2] ) {
-		color("White", alpha=0.7)
+		color("AliceBlue", alpha=0.7)
 		polyhedron(
 			points = [
 				[(points[i][0]+.01)*1000, points[i][1]*1000, points[i][2]*1000],
@@ -23,20 +23,20 @@ module DrawTrajectory(points, pointsLength, intersect, pt) {
 		);
 	}
 	if (!(intersect[0] == 0 && intersect[1] == 0 && intersect[2] == 0)) {
-		color("Yellow")
+		color("GreenYellow")
 		translate([intersect[0]*1000, intersect[1]*1000, intersect[2]*1000])
 		sphere(r=25);	
 	}
 
 }
 
-module DrawTrajectories(nTracks) {
+module drawTrajectories(nTracks) {
 	if (nTracks > len(tracks)) {
 		echo("nTracks supplied exceeds the maximum stored (", len(tracks), ")");
 	}
 	else {
 		for ( i = [0:1:nTracks] ) {
-			DrawTrajectory(tracks[i][1], tracks[i][0], tracks[i][2], tracks[i][4]);
+			Trajectory(tracks[i][1], tracks[i][0], tracks[i][2], tracks[i][4]);
 		}	
 	}
 }
