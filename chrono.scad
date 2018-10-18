@@ -18,6 +18,7 @@ Modules:
 	face = front, back
   # Draw trajectories
   drawTrajectories(nTracks)
+    nTracks = 0 -> 50
   # Draw endcap
   Endcap()
   # Draw collision point
