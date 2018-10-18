@@ -2,16 +2,14 @@
 ![alt text](https://github.com/jkguiang/ChronoSCAD/blob/master/docs/cover.png)
 ## Legend
 ```cpp
-/* ------------ Legend ------------
-   -> All measurements are in mm <-
-  Length <--> x
-  Width <--> y
-  Thick <--> z
-  front = 1
-  back = -1
-  zOffset = 3000; // Endcap is at z=3m in CMS coords
-  flat = false;   // Toggle 2D/3D LGADs 
-*/
+-> All measurements are in mm <-
+Length <--> x
+Width <--> y
+Thick <--> z
+front = 1
+back = -1
+zOffset = 3000; // Endcap is at z=3m in CMS coords
+flat = false;   // Toggle 2D/3D LGADs 
 ```
 ## Modules
 ```cpp
