@@ -9,8 +9,8 @@
   Thick <--> z
   front = 1
   back = -1
-  zOffset = 3000; // Endcap is at z=3m in CMS
-  flat = false;   // Toggle 
+  zOffset = 3000; // Endcap is at z=3m in CMS coords
+  flat = false;   // Toggle 2D/3D LGADs 
 */
 ```
 ## Modules
@@ -20,7 +20,7 @@ drawSensors(face)
     int face = front (1), back (-1)
 ```
 ```cpp
-// Draw Trajectories
+// Draw trajectories
 drawTrajectories(nTracks)
     int nTracks = 0 -> 50 (max)
 ```
