@@ -1,5 +1,6 @@
 include <./modules.scad>;
 include <./logic.scad>;
+include <./trajectories.scad>;
 
 /* ---------- ChronoSCAD ----------
    -> All measurements are in mm <-
@@ -35,7 +36,7 @@ endcapThick = (0.25*25.4);
 
 // Drawing
 module Detector() {
-	//Endcap();
+	Endcap();
 	drawSensors(front);
 	drawSensors(back);
 	//SensorHalfLeft();
@@ -53,3 +54,4 @@ module Detector() {
 
 translate([0,0,zOffset])
 Detector();
+Trajectories();
