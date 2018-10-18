@@ -1,5 +1,5 @@
 # ChronoSCAD
-![alt text](https://github.com/jkguiang/ChronoSCAD/blob/master/docs/sensors-endcap.png)
+![alt text](https://github.com/jkguiang/ChronoSCAD/blob/master/docs/cover.png)
 ## Legend
 ```cpp
 // Variable name mapping to x,y,z dimensions
