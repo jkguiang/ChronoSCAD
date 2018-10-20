@@ -43,7 +43,7 @@ def LoadRays(rayPath):
                           "eta":    ray[4],
                           "phi":    ray[5],
                           "pos":    [ ray[6], ray[7], ray[8] ],
-                          "dir":    [ ray[9], ray[10], ray[11] ]}) 
+                          "p":    [ ray[9], ray[10], ray[11] ]}) 
 
     return rays
 
@@ -60,56 +60,66 @@ def CheckHit(poly, hitPos):
     z1 = CrossProduct(hitPosToVertex[1], hitPosToVertex[2])
     z2 = CrossProduct(hitPosToVertex[2], hitPosToVertex[0])
 
-    return (z0*z1*z2 < 0)
+    return (z0 > 0 and z1 > 0 and z2 > 0)
 
 
 def Parse(stlPath, rayPath):
     """ Parse polygons and rays, look for hits """
+
     # Load STL and ray trajectory files
-    polys = LoadMesh(stlPath)
+    polys = LoadMesh(stlPath, sf=(0.001))
     rays = LoadRays(rayPath)
     hits = []
+    noHits = []
+
     # Loop over rays
     for ray in tqdm(rays[0:100]):
         isHit = False
-        rayHits = []
-        # Calculate velocity of particle
-        vel = [ ray["dir"][0]/ray["mass"], 
-                ray["dir"][1]/ray["mass"], 
-                ray["dir"][2]/ray["mass"] ] 
         # Loop over polygons
         for poly in polys:
             # Calculate ray's proximity to first polygon vertex
-            t = abs(poly[0][2] - ray["pos"][2])/vel[2]
-            hitPos = [ ray["pos"][0]+t*vel[0], 
-                       ray["pos"][1]+t*vel[1],
-                       ray["pos"][2]+t*vel[2] ]
+            t = abs(poly[0][2] - ray["pos"][2])/ray["p"][2]
+            hitPos = [ ray["pos"][0]+t*ray["p"][0], 
+                       ray["pos"][1]+t*ray["p"][1],
+                       ray["pos"][2]+t*ray["p"][2] ]
             xDisp = abs(hitPos[0] - poly[0][0])
             yDisp = abs(hitPos[1] - poly[0][1])
-            # Check for proximity and trajectory intersection
-            if xDisp < 0.05 and yDisp < 0.05 and CheckHit(poly, hitPos):
+            # Check for proximity then trajectory intersection
+            if xDisp < 0.1 and yDisp < 0.1 and CheckHit(poly, hitPos):
                 isHit = True
-                rayHits.append(poly)
+                hits.append(poly)
 
-        if isHit:
-            hits.append({ "ray":ray, "hits":np.array(rayHits) })
+    Render(np.array(hits), np.array(polys))
 
-    print(len(rays), len(hits), len(hits)/len(rays))
     return hits
 
-def Render(hits):
+def Render(hits, polys):
     """ Draw all hit polygons """
 
-    # Set up plot
-    figure = plt.figure()
-    axes = mplot3d.Axes3D(figure)
+    collection = mplot3d.art3d.Poly3DCollection(polys, linewidths=1, alpha=0.1)
+    face_color = [0.5, 0.5, 1] # alternative: matplotlib.colors.rgb2hex([0.5, 0.5, 1])
+    collection.set_facecolor(face_color)
 
-    # Auto scale to mesh size
-    # scale = lgadMesh.points.flatten(-1)
-    # axes.auto_scale_xyz(scale, scale, scale)
+    # Set up plot
+    figure = plt.gcf()
+    axes = figure.add_subplot(111, projection='3d')
+    axes._axis3don = False 
 
     # Plot hits
-    axes.add_collection3d(mplot3d.art3d.Poly3DCollection(hits["hits"]))
+    axes.add_collection3d(mplot3d.art3d.Poly3DCollection(hits, facecolors="g"))
+    axes.add_collection3d(collection)
+
+    # Plot barrel
+    sr, sl = 3.6, 15.0
+    t = np.linspace(0, 2*np.pi, 100)
+    axes.plot(xs=sr*np.cos(t), ys=sr*np.sin(t), zs=sl/2, color='k')
+    axes.plot(xs=sr*np.cos(t), ys=sr*np.sin(t), zs=-sl/2, color='k')
+    for i in range(8):
+        th = i * 2*np.pi/8
+        x = sr*np.cos(th)
+        y = sr*np.sin(th)
+        axes.plot(xs=[x,x], ys=[y,y], zs=[-sl/2, sl/2], color='k')
+
     plt.show()
 
     return
@@ -148,11 +158,6 @@ def Debug(stlPath, txtPath):
     return
 
 if __name__ == "__main__":
-    #LoadMesh(stlPath='stl/21mmElectronics.stl', sf=(0.001), verbose=True)
+    #LoadMesh(stlPath='stl/1250mmOuterRad.stl', sf=(0.001), verbose=True)
     #Debug('stl/lgads.stl', 'txt/output_1927.txt')
-    #debugPoly = [ [0,0,0],
-    #              [0,10,0],
-    #              [10,0,0]]
-    #debugHit = [5,-0.00001,0]
-    #print(CheckHit(debugPoly, debugHit))
     Parse('stl/lgads.stl', 'txt/output_1927.txt')

@@ -29,7 +29,7 @@ Modules:
 
 // Sensor Parameters
 lgadWidth = 21.8;
-circuitWidth = 10;
+circuitWidth = 20;
 sensorLength = 42.6;
 sensorThick = 1;
 showCircuits = false;
@@ -50,5 +50,5 @@ module Detector() {
 
 translate([0,0,zOffset])
 Detector();
-drawTrajectories(50);
+drawTrajectories(50, toggleColors=true);
 Collision();
