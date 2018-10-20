@@ -1,10 +1,7 @@
-import time
 import numpy as np
 from stl import mesh
 from mpl_toolkits import mplot3d
 from matplotlib import pyplot as plt
-
-from tqdm import tqdm
 
 def LoadMesh(stlPath, sf=1, verbose=False):
     """ Load polygon mesh, only return polygons with normal in z-direction """
@@ -15,8 +12,8 @@ def LoadMesh(stlPath, sf=1, verbose=False):
         if (n[2] > 0):
             zVectors.append([ allVectors[i][0]*sf, allVectors[i][1]*sf, allVectors[i][2]*sf ])
 
-    if (verbose):
-        print("From file: {}".format(stlPath))
+    if verbose:
+        print("Loaded {0} polygons from file: {1}".format(len(zVectors), stlPath))
         nLGAD = len(zVectors)/2
         nASIC = nLGAD*2
         print("---------------- Cost ----------------")
@@ -30,7 +27,7 @@ def LoadMesh(stlPath, sf=1, verbose=False):
 
     return zVectors
 
-def LoadRays(rayPath):
+def LoadRays(rayPath, verbose=False):
     """ Load ray trajectory data from txt file, map to dict """
     rays = []
     with open(rayPath, "r") as rayFile:
@@ -44,6 +41,8 @@ def LoadRays(rayPath):
                           "phi":    ray[5],
                           "pos":    [ ray[6], ray[7], ray[8] ],
                           "p":    [ ray[9], ray[10], ray[11] ]}) 
+    if verbose:
+        print("Loaded {0} trajectories from file {1}".format(len(rays), rayPath))
 
     return rays
 
@@ -63,20 +62,25 @@ def CheckHit(poly, hitPos):
     return (z0 > 0 and z1 > 0 and z2 > 0)
 
 
-def Parse(stlPath, rayPath):
+def Parse(stlPath, rayPath, verbose=False):
     """ Parse polygons and rays, look for hits """
 
     # Load STL and ray trajectory files
-    polys = LoadMesh(stlPath, sf=(0.001))
-    rays = LoadRays(rayPath)
+    polys = LoadMesh(stlPath, sf=(0.001), verbose=verbose)
+    rays = LoadRays(rayPath, verbose=verbose)
     hits = []
-    noHits = []
+    rayHits = {}
+    polyHits = {}
+    output = { "polys":{ "hitCount":{}, "hitPolys":[] },
+                "rays":{ "hitCount":{} } }
 
     # Loop over rays
-    for ray in tqdm(rays[0:100]):
-        isHit = False
+    for i, ray in enumerate(rays[0:100]):
+        output["rays"]["hitCount"][i] = 0
         # Loop over polygons
-        for poly in polys:
+        for j, poly in enumerate(polys):
+            if j not in polyHits:
+                output["polys"]["hitCount"][j] = 0
             # Calculate ray's proximity to first polygon vertex
             t = abs(poly[0][2] - ray["pos"][2])/ray["p"][2]
             hitPos = [ ray["pos"][0]+t*ray["p"][0], 
@@ -86,27 +90,45 @@ def Parse(stlPath, rayPath):
             yDisp = abs(hitPos[1] - poly[0][1])
             # Check for proximity then trajectory intersection
             if xDisp < 0.1 and yDisp < 0.1 and CheckHit(poly, hitPos):
-                isHit = True
-                hits.append(poly)
+                output["polys"]["hitPolys"].append(poly)
+                output["polys"]["hitCount"][j] += 1
+                output["rays"]["hitCount"][i] += 1
 
-    Render(np.array(hits), np.array(polys))
+    if verbose:
+        rayCount = float(len(rays[0:100]))
+        hitCount = 0
+        doubleHitCount = 0
+        for k in output["rays"]["hitCount"]:
+            nHits = output["rays"]["hitCount"][k]
+            if nHits > 0:
+                hitCount += 1
+                if nHits == 2:
+                    doubleHitCount += 1
+        singleHitCount = hitCount - doubleHitCount
+        print("--> Results from {} Simulated Trajectories <--".format(int(rayCount)))
+        print("Total Hits: {0} ({1}%)".format(hitCount, (hitCount/rayCount)*100))
+        print("Single Hits: {0} ({1}%)".format(singleHitCount, (singleHitCount/rayCount)*100))
+        print("Double Hits: {0} ({1}%)".format(doubleHitCount, (doubleHitCount/rayCount)*100))
 
-    return hits
+    Render(output["polys"]["hitPolys"], polys)
 
-def Render(hits, polys):
-    """ Draw all hit polygons """
+    return output
 
-    collection = mplot3d.art3d.Poly3DCollection(polys, linewidths=1, alpha=0.1)
-    face_color = [0.5, 0.5, 1] # alternative: matplotlib.colors.rgb2hex([0.5, 0.5, 1])
-    collection.set_facecolor(face_color)
+def Render(hitPolys, allPolys):
+    """ Draw hit polygons over all polygons """
 
     # Set up plot
     figure = plt.gcf()
     axes = figure.add_subplot(111, projection='3d')
     axes._axis3don = False 
 
-    # Plot hits
-    axes.add_collection3d(mplot3d.art3d.Poly3DCollection(hits, facecolors="g"))
+    # Plot hit polygons
+    axes.add_collection3d(mplot3d.art3d.Poly3DCollection(hitPolys, facecolors="g"))
+
+    # Plot all polygons
+    collection = mplot3d.art3d.Poly3DCollection(allPolys, linewidths=1, alpha=0.1)
+    face_color = [0.5, 0.5, 1]
+    collection.set_facecolor(face_color)
     axes.add_collection3d(collection)
 
     # Plot barrel
@@ -124,40 +146,6 @@ def Render(hits, polys):
 
     return
 
-def Debug(stlPath, txtPath):
-    from mpl_toolkits.mplot3d import Axes3D
-    """ Load polygon mesh, only return polygons with normal in z-direction """
-
-    vectors = LoadMesh(stlPath, sf=(0.001), verbose=True)
-    rays = []
-    with open(txtPath, "r") as rayFile:
-        for line in rayFile.readlines():
-            rays.append(np.array(eval(line)))
-
-    figure = plt.gcf()
-    axes = figure.add_subplot(111, projection='3d')
-    colors = ['r','g','b','c','m','y']
-    nc = len(colors)
-
-    # Plot hits
-    axes.add_collection3d(mplot3d.art3d.Poly3DCollection(vectors))
-    for i in range(len(rays)):
-        axes.plot3D(xs=rays[i][:,0], ys=rays[i][:,1], zs=rays[i][:,2], color=colors[i%nc])
-
-    sr, sl = 3.6, 15.0
-    t = np.linspace(0, 2*np.pi, 100)
-    axes.plot(xs=sr*np.cos(t), ys=sr*np.sin(t), zs=sl/2, color='k')
-    axes.plot(xs=sr*np.cos(t), ys=sr*np.sin(t), zs=-sl/2, color='k')
-    for i in range(8):
-        th = i * 2*np.pi/8
-        x = sr*np.cos(th)
-        y = sr*np.sin(th)
-        axes.plot(xs=[x,x], ys=[y,y], zs=[-sl/2, sl/2], color='k')
-    plt.show()
-
-    return
-
 if __name__ == "__main__":
     #LoadMesh(stlPath='stl/1250mmOuterRad.stl', sf=(0.001), verbose=True)
-    #Debug('stl/lgads.stl', 'txt/output_1927.txt')
-    Parse('stl/lgads.stl', 'txt/output_1927.txt')
+    response = Parse('stl/lgads.stl', 'txt/output_1927.txt', verbose=True)
