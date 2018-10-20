@@ -5,9 +5,9 @@ module Collision() {
 	sphere(r=30);
 }
 
-module Trajectory(points, pointsLength, intersect, pt) {
+module Trajectory(points, pointsLength, intersect, pColor) {
 	for ( i = [0:1:pointsLength-2] ) {
-		color("AliceBlue", alpha=0.7)
+		color(pColor, alpha=0.7)
 		polyhedron(
 			points = [
 				[(points[i][0]+.01)*1000, points[i][1]*1000, points[i][2]*1000],
@@ -30,13 +30,15 @@ module Trajectory(points, pointsLength, intersect, pt) {
 
 }
 
-module drawTrajectories(nTracks) {
+module drawTrajectories(nTracks, toggleColors=true) {
 	if (nTracks > len(tracks)) {
-		echo("nTracks supplied exceeds the maximum stored (", len(tracks), ")");
+		echo(str("nTracks supplied (", nTracks,
+				 ") exceeds the number of tracks stored (", len(tracks), ")"));
 	}
 	else {
 		for ( i = [0:1:nTracks] ) {
-			Trajectory(tracks[i][1], tracks[i][0], tracks[i][2], tracks[i][4]);
+			pColor = toggleColors ? tracks[i][4] : "AliceBlue";
+			Trajectory(tracks[i][1], tracks[i][0], tracks[i][2], pColor);
 		}	
 	}
 }
