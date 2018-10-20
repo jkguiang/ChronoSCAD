@@ -7,7 +7,7 @@ module drawSensors(face) {
 		x = inc*(sensorHalfWidth)+0.5;
 		yMax = pow(pow(endcapOuterRadius, 2)-pow(x+(sensorHalfWidth),2), 0.5);
 		yMin = (x <= endcapInnerRadius) ? pow(pow(endcapInnerRadius, 2)-pow(x,2), 0.5) : 0;
-		if (x <= endcapOuterRadius) {
+		if (x+circuitWidth <= endcapOuterRadius) {
 			if (inc%2 == 0) {
 				// X-axis Placement
 				drawEvenQuadrants(x, yMax, yMin, sensorHalfWidth, face);
