@@ -1,4 +1,5 @@
 # ChronoSCAD
+[![CodeFactor](https://www.codefactor.io/repository/github/jkguiang/chronoscad/badge/master)](https://www.codefactor.io/repository/github/jkguiang/chronoscad/overview/master)
 ![alt text](https://github.com/jkguiang/ChronoSCAD/blob/master/docs/cover.png)
 ## Legend
 ```cpp
