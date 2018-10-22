@@ -29,11 +29,12 @@ Modules:
 
 // Sensor Parameters
 lgadWidth = 21.8;
-circuitWidth = 20;
+circuitWidth = 10.5;
 sensorLength = 42.6;
 sensorThick = 1;
 showCircuits = false;
 zOffset = 3000;
+diskSpacing = 20;
 flat = false;
 
 // Endcap Parameters
@@ -48,7 +49,13 @@ module Detector() {
 	drawSensors(back);
 }
 
-translate([0,0,zOffset])
-Detector();
+module drawDetector() {
+	translate([0,0,zOffset])
+	Detector();
+	translate([0,0,zOffset+diskSpacing])
+	Detector();	
+}
+
+drawDetector();
 drawTrajectories(50, toggleColors=true);
 Collision();
