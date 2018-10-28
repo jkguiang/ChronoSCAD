@@ -1,6 +1,7 @@
 include <./modules.scad>;
 include <./logic.scad>;
 include <./trajectories.scad>;
+include <./barrel.scad>;
 
 /* ---------- ChronoSCAD ----------
    -> All measurements are in mm <-
@@ -27,9 +28,9 @@ Modules:
   axes()
 */
 
-// Sensor Parameters
+// Endcap Sensor Parameters
 lgadWidth = 21.8;
-circuitWidth = 10.5;
+circuitWidth = 20.5;
 sensorLength = 42.6;
 sensorThick = 1;
 showCircuits = false;
@@ -41,6 +42,15 @@ flat = false;
 endcapOuterRadius = 1270;
 endcapInnerRadius = 315;
 endcapThick = (0.25*25.4);
+
+// Barrel Sensor Parameters
+barrelSensorWidth = 150;
+barrelSensorThick = 1;
+barrelSensorLength = 6000;
+barrelSensorSpacing = 0.1; // in degrees
+
+// Barrel Parameters
+barrelRadius = 1290;
 
 // Drawing
 module Detector() {
@@ -58,4 +68,7 @@ module drawDetector() {
 
 drawDetector();
 drawTrajectories(50, toggleColors=true);
+rotate([0,0,-30])
+drawBarrelTrajectories(50, toggleColors=true);
 Collision();
+drawBarrelHalf(back);

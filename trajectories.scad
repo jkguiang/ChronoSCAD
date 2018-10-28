@@ -1,7 +1,8 @@
 include <./tracks.scad>;
+include <./barrelTracks.scad>;
 
 module Collision() {
-	color("DarkGrey")
+	color("White")
 	sphere(r=30);
 }
 
@@ -39,6 +40,19 @@ module drawTrajectories(nTracks, toggleColors=true) {
 		for ( i = [0:1:nTracks] ) {
 			pColor = toggleColors ? tracks[i][4] : "AliceBlue";
 			Trajectory(tracks[i][1], tracks[i][0], tracks[i][2], pColor);
+		}	
+	}
+}
+
+module drawBarrelTrajectories(nTracks, toggleColors=true) {
+	if (nTracks > len(barrelTracks)) {
+		echo(str("nTracks supplied (", nTracks,
+				 ") exceeds the number of tracks stored (", len(barrelTracks), ")"));
+	}
+	else {
+		for ( i = [0:1:nTracks] ) {
+			pColor = toggleColors ? barrelTracks[i][4] : "AliceBlue";
+			Trajectory(barrelTracks[i][1], barrelTracks[i][0], barrelTracks[i][2], pColor);
 		}	
 	}
 }
