@@ -30,30 +30,36 @@ module drawSensors(face) {
 }
 
 module drawEvenQuadrants(x, yMax, yMin, sensorHalfWidth, face) {
-	for (y=[yMin:sensorLength+0.5:yMax]) {
-		if (y+sensorLength+0.5 <= yMax) {
-			if (face == front) {
-				SensorHalfLeft(x,y);
-				SensorHalfRight(-x-sensorHalfWidth,-y-sensorLength);				
-			}
-			else {
-				SensorHalfRight(x,y);
-				SensorHalfLeft(-x-sensorHalfWidth,-y-sensorLength);					
+	for (y=[yMin:(sensorLength+0.5)*nSensors:yMax]) {
+		if (y+(sensorLength+0.5)*nSensors <= yMax) {
+			for (yInc=[0:1:nSensors-1]) {
+				thisY = y+(sensorLength+0.5)*yInc;
+				if (face == front) {
+					SensorHalfLeft(x,thisY);
+					SensorHalfRight(-x-sensorHalfWidth,-thisY-sensorLength);				
+				}
+				else {
+					SensorHalfRight(x,thisY);
+					SensorHalfLeft(-x-sensorHalfWidth,-thisY-sensorLength);
+				}
 			}
 		}
 	}
 }
 
 module drawOddQuadrants(x, yMax, yMin, sensorHalfWidth, face) {
-	for (y=[yMin:sensorLength+0.5:yMax]) {
-		if (y+sensorLength+0.5 <= yMax) {
-			if (face == front) {
-				SensorHalfRight(x,y);
-				SensorHalfLeft(-x-sensorHalfWidth,-y-sensorLength);				
-			}
-			else {
-				SensorHalfLeft(x,y);
-				SensorHalfRight(-x-sensorHalfWidth,-y-sensorLength);	
+	for (y=[yMin:(sensorLength+0.5)*nSensors:yMax]) {
+		if (y+(sensorLength+0.5)*nSensors <= yMax) {
+			for (yInc=[0:1:nSensors-1]) {
+				thisY = y+(sensorLength+0.5)*yInc;
+				if (face == front) {
+					SensorHalfRight(x,thisY);
+					SensorHalfLeft(-x-sensorHalfWidth,-thisY-sensorLength);				
+				}
+				else {
+					SensorHalfLeft(x,thisY);
+					SensorHalfRight(-x-sensorHalfWidth,-thisY-sensorLength);	
+				}
 			}
 		}
 	}

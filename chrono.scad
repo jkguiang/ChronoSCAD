@@ -38,6 +38,7 @@ zOffset = 3000;
 diskSpacing = 20;
 flat = false;
 inline = true;
+nSensors = 3; // Number of sensors per module (in one row)
 
 // Endcap Parameters
 endcapOuterRadius = 1270;
@@ -70,7 +71,7 @@ module drawDetector(side) {
 // ETL top
 module ETLTop() {
 	drawDetector(front);
-	drawTrajectories(50, toggleColors=true);
+	//drawTrajectories(50, toggleColors=true);
 }
 
 // ETL bottom
