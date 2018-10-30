@@ -37,6 +37,7 @@ showCircuits = false;
 zOffset = 3000;
 diskSpacing = 20;
 flat = false;
+inline = true;
 
 // Endcap Parameters
 endcapOuterRadius = 1270;
@@ -44,13 +45,13 @@ endcapInnerRadius = 315;
 endcapThick = (0.25*25.4);
 
 // Barrel Sensor Parameters
-barrelSensorWidth = 150;
-barrelSensorThick = 1;
-barrelSensorLength = 6000;
-barrelSensorSpacing = 0.1; // in degrees
+barrelSensorWidth = 192.14; 
+barrelSensorThick = 10;
+barrelSensorLength = 4860;
+barrelSensorSpacing = 0; // in degrees
 
 // Barrel Parameters
-barrelRadius = 1290;
+barrelRadius = 1160;
 
 // Drawing
 module Detector() {
@@ -59,16 +60,33 @@ module Detector() {
 	drawSensors(back);
 }
 
-module drawDetector() {
-	translate([0,0,zOffset])
+module drawDetector(side) {
+	translate([0,0,side*zOffset])
 	Detector();
-	translate([0,0,zOffset+diskSpacing])
+	translate([0,0,side*(zOffset+diskSpacing)])
 	Detector();	
 }
 
-drawDetector();
-drawTrajectories(50, toggleColors=true);
-rotate([0,0,-30])
-drawBarrelTrajectories(50, toggleColors=true);
-Collision();
-drawBarrelHalf(back);
+// ETL top
+module ETLTop() {
+	drawDetector(front);
+	drawTrajectories(50, toggleColors=true);
+}
+
+// ETL bottom
+module ETLBottom() {
+	drawDetector(back);
+	rotate([180,0,0])
+	drawTrajectories(90, toggleColors=true);	
+}
+
+// BTL
+module BTL() {
+	rotate([0,0,-30])
+	drawBarrelTrajectories(90, toggleColors=true);
+	Collision();
+	//drawBarrelHalf(back);
+	drawBarrel();
+}
+
+ETLTop();
