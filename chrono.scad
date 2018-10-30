@@ -38,7 +38,8 @@ zOffset = 3000;
 diskSpacing = 20;
 flat = false;
 inline = true;
-nSensors = 3; // Number of sensors per module (in one row)
+nSensors = 2; // Number of sensors per module (in one row)
+strips = true;
 
 // Endcap Parameters
 endcapOuterRadius = 1270;

@@ -2,8 +2,9 @@
 module drawSensors(face) {
 	sensorHalfWidth = lgadWidth+circuitWidth;
 	zDisp = (face == 1) ? 0 : -(sensorThick+endcapThick);
+	loopStart = (!strips && face == front) ? 1 : 0;
 	translate([0,0,zDisp])
-	for(inc=[0:1:endcapOuterRadius]) {
+	for(inc=[loopStart:1:endcapOuterRadius]) {
 		x = inc*(sensorHalfWidth+0.5);
 		if (x <= endcapOuterRadius) {
 			correction1 = (inc != 0 && face == front && inline) ? sensorHalfWidth+0.5 : 0;
