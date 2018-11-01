@@ -38,8 +38,10 @@ zOffset = 3000;
 diskSpacing = 20;
 flat = false;
 inline = true;
-nSensors = 2; // Number of sensors per module (in one row)
-strips = true;
+nSensors = 3; // Number of sensors per module (in one row)
+strips = false;
+wedges = false;
+channel = 20; // Half of the channel width
 
 // Endcap Parameters
 endcapOuterRadius = 1270;
@@ -65,8 +67,16 @@ module Detector() {
 module drawDetector(side) {
 	translate([0,0,side*zOffset])
 	Detector();
-	translate([0,0,side*(zOffset+diskSpacing)])
-	Detector();	
+	if (wedges) {
+		rotate([0,0,45])
+		translate([0,0,side*(zOffset+diskSpacing)])
+		Detector();				
+	}
+	else {
+		rotate([0,0,90])
+		translate([0,0,side*(zOffset+diskSpacing)])
+		Detector();		
+	}
 }
 
 // ETL top
@@ -84,11 +94,12 @@ module ETLBottom() {
 
 // BTL
 module BTL() {
-	rotate([0,0,-30])
-	drawBarrelTrajectories(90, toggleColors=true);
+	drawBarrelTrajectories(180, toggleColors=true);
 	Collision();
-	//drawBarrelHalf(back);
-	drawBarrel();
+	drawBarrelHalf(back);
+	//drawBarrel();
 }
 
 ETLTop();
+//ETLBottom();
+//BTL();
