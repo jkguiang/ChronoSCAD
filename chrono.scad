@@ -79,6 +79,41 @@ module drawDetector(side) {
 	}
 }
 
+module drawLayer(nLayer) {
+	if (nLayer == 0) {
+		translate([0,0,zOffset])
+		drawSensors(back);
+	}
+	else if (nLayer == 1) {
+		translate([0,0,zOffset])
+		drawSensors(front);
+	}
+	else if (nLayer == 2) {
+		if (wedges) {
+			rotate([0,0,45])
+			translate([0,0,(zOffset+diskSpacing)])
+			drawSensors(back);				
+		}
+		else {
+			rotate([0,0,90])
+			translate([0,0,(zOffset+diskSpacing)])
+			drawSensors(back);		
+		}
+	}
+	else if (nLayer == 3) {
+		if (wedges) {
+			rotate([0,0,45])
+			translate([0,0,(zOffset+diskSpacing)])
+			drawSensors(front);				
+		}
+		else {
+			rotate([0,0,90])
+			translate([0,0,(zOffset+diskSpacing)])
+			drawSensors(front);	
+		}
+	}
+}
+
 // ETL top
 module ETLTop() {
 	drawDetector(front);
@@ -100,6 +135,7 @@ module BTL() {
 	//drawBarrel();
 }
 
-ETLTop();
+//ETLTop();
 //ETLBottom();
 //BTL();
+drawLayer(0);
