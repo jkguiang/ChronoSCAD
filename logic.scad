@@ -5,7 +5,8 @@ module drawSensors(face) {
 	loopStart = (!strips && face == front && wedges) ? 1 : 0;
 	translate([0,0,zDisp])
 	for(inc=[loopStart:1:endcapOuterRadius]) {
-		x = inc*(sensorHalfWidth+0.5);
+		nudge = (inc == 0 && !wedges) ? 0.25 : 0;
+		x = inc*(sensorHalfWidth+0.5)+nudge;
 		if (x <= endcapOuterRadius) {
 			correction1 = (inc != 0 && face == front && inline) ? sensorHalfWidth+0.5 : 0;
 			correction2 = (inc != 0 && face == back && inline) ? sensorHalfWidth+0.5 : 0;
