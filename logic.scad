@@ -1,8 +1,8 @@
 // Sensor Placement Logic
-module drawSensors(face) {
+module drawSensors(face, yParallel=true) {
 	sensorHalfWidth = lgadWidth+circuitWidth;
 	zDisp = (face == 1) ? 0 : -(sensorThick+endcapThick);
-	loopStart = (!strips && face == front && wedges) ? 1 : 0;
+	loopStart = (!strips && face == front && (wedges || yParallel)) ? 1 : 0;
 	translate([0,0,zDisp])
 	for(inc=[loopStart:1:endcapOuterRadius]) {
 		nudge = (inc == 0 && !wedges) ? 0.25 : 0;
@@ -10,7 +10,7 @@ module drawSensors(face) {
 		if (x <= endcapOuterRadius) {
 			correction1 = (inc != 0 && face == front && inline) ? sensorHalfWidth+0.5 : 0;
 			correction2 = (inc != 0 && face == back && inline) ? sensorHalfWidth+0.5 : 0;
-			channelDisp = (wedges) ? 0 : channel;
+			channelDisp = (wedges || yParallel) ? 0 : channel;
 			if (inc%2 == 0) {
 				yMin = (x-correction1 <= endcapInnerRadius) ? pow(pow(endcapInnerRadius, 2)-pow(x-correction1,2), 0.5) : 0.5+channelDisp;
 				yMax = pow(pow(endcapOuterRadius, 2)-pow(x+correction2+(sensorHalfWidth+circuitWidth),2), 0.5);

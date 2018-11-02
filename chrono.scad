@@ -41,7 +41,7 @@ inline = true;
 nSensors = 3; // Number of sensors per module (in one row)
 strips = false;
 wedges = false;
-channel = 20; // Half of the channel width
+channel = 21.8; // Half of the channel width
 
 // Endcap Parameters
 endcapOuterRadius = 1270;
@@ -97,7 +97,7 @@ module drawLayer(nLayer) {
 		else {
 			rotate([0,0,90])
 			translate([0,0,(zOffset+diskSpacing)])
-			drawSensors(back);		
+			drawSensors(back, yParallel=false);		
 		}
 	}
 	else if (nLayer == 3) {
@@ -109,7 +109,7 @@ module drawLayer(nLayer) {
 		else {
 			rotate([0,0,90])
 			translate([0,0,(zOffset+diskSpacing)])
-			drawSensors(front);	
+			drawSensors(front, yParallel=false);	
 		}
 	}
 }
@@ -117,7 +117,7 @@ module drawLayer(nLayer) {
 // ETL top
 module ETLTop() {
 	drawDetector(front);
-	//drawTrajectories(50, toggleColors=true);
+	drawTrajectories(50, toggleColors=true);
 }
 
 // ETL bottom
@@ -139,3 +139,6 @@ module BTL() {
 //ETLBottom();
 //BTL();
 drawLayer(0);
+drawLayer(1);
+drawLayer(2);
+drawLayer(3);
