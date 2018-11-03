@@ -138,7 +138,8 @@ module BTL() {
 //ETLTop();
 //ETLBottom();
 //BTL();
-drawLayer(0);
-drawLayer(1);
-drawLayer(2);
-drawLayer(3);
+printLayer = 0;
+drawLayer(printLayer);
+//drawLayer(1);
+//drawLayer(2);
+//drawLayer(3);
