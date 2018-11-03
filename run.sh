@@ -1,10 +1,10 @@
-modType=${1}
-modSize=${2}
-gapSize=${3}
-
-for nLayer in 0 1 2 3
-do
-    outName=${modType}-${modSize}_${gapSize}mmGap${nLayer}
-    openscad -o ${outName}.stl -D "printLayer=${nLayer}" chrono.scad &> ${outName}_log.txt & 
-done
+if [[ ${1} != "" ]] ; then
+    outName=${1}
+    for nLayer in 0 1 2 3
+    do
+        openscad -o ${outName}${nLayer}.stl -D "printLayer=${nLayer}" chrono.scad &> ${outName}_log${nLayer}.txt & 
+    done
+else
+    echo "Usage: ./run.sh <outName>"
+fi
 
