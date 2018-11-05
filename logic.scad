@@ -15,8 +15,10 @@ module drawSensors(face, yParallel=true) {
 				yMin = (x-correction1 <= endcapInnerRadius) ? pow(pow(endcapInnerRadius, 2)-pow(x-correction1,2), 0.5) : 0.5+channelDisp;
 				yMax = pow(pow(endcapOuterRadius, 2)-pow(x+correction2+(sensorHalfWidth+circuitWidth),2), 0.5);
 				// X-axis Placement
+				echo("QUAD",nQuad=0);
 				drawEvenQuadrants(x, yMax, yMin, sensorHalfWidth, face);
-				if (wedges) {				
+				echo("QUAD",nQuad=1);
+				if (wedges) {
 					rotate([0,0,90])
 					drawEvenQuadrants(x, yMax, yMin, sensorHalfWidth, face);
 				}
@@ -30,7 +32,9 @@ module drawSensors(face, yParallel=true) {
 				yMin = (x-correction2 <= endcapInnerRadius) ? pow(pow(endcapInnerRadius, 2)-pow(x-correction2,2), 0.5) : 0.5+channelDisp;
 				yMax = pow(pow(endcapOuterRadius, 2)-pow(x+correction1+(sensorHalfWidth+circuitWidth),2), 0.5);
 				// X Axis Placement
+				echo("QUAD", nQuad=2);
 				drawOddQuadrants(x, yMax, yMin, sensorHalfWidth, face);
+				echo("QUAD", nQuad=3);
 //				// Y-axis Placement
 				if (wedges) {				
 					rotate([0,0,90])

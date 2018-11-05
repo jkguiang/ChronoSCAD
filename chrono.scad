@@ -81,18 +81,21 @@ module drawDetector(side) {
 
 module drawLayer(nLayer) {
 	if (nLayer == 0) {
+		echo("START",layer=nLayer, z=zOffset-(sensorThick+endcapThick));
 		translate([0,0,zOffset])
 		drawSensors(back);
 	}
 	else if (nLayer == 1) {
+		echo("START",layer=nLayer, z=zOffset);
 		translate([0,0,zOffset])
 		drawSensors(front);
 	}
 	else if (nLayer == 2) {
-		if (wedges) {
+		echo("START",layer=nLayer, z=zOffset+diskSpacing-(sensorThick+endcapThick));
+		if (wedges) {		
 			rotate([0,0,45])
 			translate([0,0,(zOffset+diskSpacing)])
-			drawSensors(back);				
+			drawSensors(back);
 		}
 		else {
 			rotate([0,0,90])
@@ -101,6 +104,7 @@ module drawLayer(nLayer) {
 		}
 	}
 	else if (nLayer == 3) {
+		echo("START",layer=nLayer, z=zOffset+diskSpacing);
 		if (wedges) {
 			rotate([0,0,45])
 			translate([0,0,(zOffset+diskSpacing)])
@@ -138,8 +142,8 @@ module BTL() {
 //ETLTop();
 //ETLBottom();
 //BTL();
-printLayer = 0;
-drawLayer(printLayer);
+renderLayer = 0;
+drawLayer(renderLayer);
 //drawLayer(1);
 //drawLayer(2);
 //drawLayer(3);
