@@ -35,12 +35,12 @@ sensorLength = 42.6;
 sensorThick = 1;
 showCircuits = false;
 zOffset = 3000;
-diskSpacing = 20;
+diskSpacing = 250;
 flat = false;
 inline = true;
-nSensors = 3; // Number of sensors per module (in one row)
+nSensors = 1; // Number of sensors per module (in one row)
 strips = false;
-wedges = false;
+wedges = true;
 channel = 21.8; // Half of the channel width
 
 // Endcap Parameters
@@ -59,7 +59,7 @@ barrelRadius = 1160;
 
 // Drawing
 module Detector() {
-	Endcap();
+	//Endcap();
 	drawSensors(front);
 	drawSensors(back);
 }
@@ -68,12 +68,12 @@ module drawDetector(side) {
 	translate([0,0,side*zOffset])
 	Detector();
 	if (wedges) {
-		rotate([0,0,45])
+		//rotate([0,0,45])
 		translate([0,0,side*(zOffset+diskSpacing)])
 		Detector();				
 	}
 	else {
-		rotate([0,0,90])
+		//rotate([0,0,90])
 		translate([0,0,side*(zOffset+diskSpacing)])
 		Detector();		
 	}
@@ -93,27 +93,27 @@ module drawLayer(nLayer) {
 	else if (nLayer == 2) {
 		echo("START",layer=nLayer, z=zOffset+diskSpacing-(sensorThick+endcapThick));
 		if (wedges) {		
-			rotate([0,0,45])
+			//rotate([0,0,45])
 			translate([0,0,(zOffset+diskSpacing)])
 			drawSensors(back);
 		}
 		else {
-			rotate([0,0,90])
+			//rotate([0,0,90])
 			translate([0,0,(zOffset+diskSpacing)])
-			drawSensors(back, yParallel=false);		
+			drawSensors(back);		
 		}
 	}
 	else if (nLayer == 3) {
 		echo("START",layer=nLayer, z=zOffset+diskSpacing);
 		if (wedges) {
-			rotate([0,0,45])
+			//rotate([0,0,45])
 			translate([0,0,(zOffset+diskSpacing)])
 			drawSensors(front);				
 		}
 		else {
-			rotate([0,0,90])
+			//rotate([0,0,90])
 			translate([0,0,(zOffset+diskSpacing)])
-			drawSensors(front, yParallel=false);	
+			drawSensors(front);	
 		}
 	}
 }
@@ -121,7 +121,7 @@ module drawLayer(nLayer) {
 // ETL top
 module ETLTop() {
 	drawDetector(front);
-	drawTrajectories(50, toggleColors=true);
+//	drawTrajectories(50, toggleColors=true);
 }
 
 // ETL bottom
@@ -139,11 +139,11 @@ module BTL() {
 	//drawBarrel();
 }
 
-//ETLTop();
+ETLTop();
 //ETLBottom();
 //BTL();
-renderLayer = 0;
-drawLayer(renderLayer);
+//renderLayer = 0;
+//drawLayer(renderLayer);
 //drawLayer(1);
 //drawLayer(2);
 //drawLayer(3);

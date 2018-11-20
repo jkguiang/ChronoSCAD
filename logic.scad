@@ -57,12 +57,12 @@ module drawEvenQuadrants(x, yMax, yMin, sensorHalfWidth, face) {
 				thisY = y+(sensorLength+0.5)*yInc;
 				echo("LGAD", x=x, y=thisY);
 				if (face == front) {
-					SensorHalfLeft(x,thisY);
-					SensorHalfRight(-x-sensorHalfWidth,-thisY-sensorLength);				
+					SensorHalfLeft(x,thisY,face);
+					SensorHalfRight(-x-sensorHalfWidth,-thisY-sensorLength,face);				
 				}
 				else {
-					SensorHalfRight(x,thisY);
-					SensorHalfLeft(-x-sensorHalfWidth,-thisY-sensorLength);
+					SensorHalfRight(x,thisY,face);
+					SensorHalfLeft(-x-sensorHalfWidth,-thisY-sensorLength,face);
 				}
 			}
 		}
@@ -76,12 +76,12 @@ module drawOddQuadrants(x, yMax, yMin, sensorHalfWidth, face) {
 				thisY = y+(sensorLength+0.5)*yInc;
 				echo("LGAD", x=x, y=thisY);
 				if (face == front) {
-					SensorHalfRight(x,thisY);
-					SensorHalfLeft(-x-sensorHalfWidth,-thisY-sensorLength);				
+					SensorHalfRight(x,thisY,face);
+					SensorHalfLeft(-x-sensorHalfWidth,-thisY-sensorLength,face);				
 				}
 				else {
-					SensorHalfLeft(x,thisY);
-					SensorHalfRight(-x-sensorHalfWidth,-thisY-sensorLength);	
+					SensorHalfLeft(x,thisY,face);
+					SensorHalfRight(-x-sensorHalfWidth,-thisY-sensorLength,face);	
 				}
 			}
 		}

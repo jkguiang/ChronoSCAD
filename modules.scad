@@ -51,16 +51,16 @@ module Sensor(x,y) {
 		Circuitry(x+circuitWidth+lgadWidth*2,y);
 	}
 }
-module SensorHalfRight(x,y) {
+module SensorHalfRight(x,y,side) {
 	union() {
 		Circuitry(x,y);
-		color("MediumBlue")
+		color((side == 1) ? "MediumBlue" : "ForestGreen")
 		LGAD(x+circuitWidth,y);
 	}	
 }
-module SensorHalfLeft(x,y) {
+module SensorHalfLeft(x,y,side) {
 	union() {
-		color("RoyalBlue")
+		color((side == 1) ? "RoyalBlue" : "DarkSeaGreen")
 		LGAD(x,y);
 		Circuitry(x+lgadWidth,y);
 	}	
