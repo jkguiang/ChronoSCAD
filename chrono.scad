@@ -33,15 +33,18 @@ lgadWidth = 21.8;
 circuitWidth = 20.5;
 sensorLength = 42.6;
 sensorThick = 1;
-showCircuits = false;
 zOffset = 3000;
-diskSpacing = 250;
+diskSpacing = 20;
+nSensors = 3; // Number of sensors per module (in one row)
+channel = 21.8; // Half of the channel width
+
+// Configuration
+showCircuits = false;
 flat = false;
 inline = true;
-nSensors = 1; // Number of sensors per module (in one row)
 strips = false;
 wedges = true;
-channel = 21.8; // Half of the channel width
+align = true;
 
 // Endcap Parameters
 endcapOuterRadius = 1270;
@@ -59,7 +62,7 @@ barrelRadius = 1160;
 
 // Drawing
 module Detector() {
-	//Endcap();
+	Endcap();
 	drawSensors(front);
 	drawSensors(back);
 }
@@ -121,21 +124,21 @@ module drawLayer(nLayer) {
 // ETL top
 module ETLTop() {
 	drawDetector(front);
-//	drawTrajectories(50, toggleColors=true);
+	//drawTrajectories(50, toggleColors=true);
 }
 
 // ETL bottom
 module ETLBottom() {
 	drawDetector(back);
 	rotate([180,0,0])
-	drawTrajectories(90, toggleColors=true);	
+	drawTrajectories(50, toggleColors=true);	
 }
 
 // BTL
 module BTL() {
-	drawBarrelTrajectories(180, toggleColors=true);
+	drawBarrelTrajectories(100, toggleColors=true);
 	Collision();
-	drawBarrelHalf(back);
+	drawBarrelHalf(front);
 	//drawBarrel();
 }
 
