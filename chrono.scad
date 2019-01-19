@@ -12,7 +12,15 @@ Legend:
   front = 1
   back = -1
   zOffset (Endcap is at z=3m in CMS)
-  flat = true, false (toggle 2D/3D LGADs)
+  diskSpacing (Disks to be 20mm apart)
+Configuration (true, false)
+  showCircuits (draw circuits)
+  flat (toggle 2D/3D LGADs)
+  inline (force LGADs to be inline blocks)
+  strips (allow for single-LGAD strips along diameter)
+  wedges (toggle between D and Wedge configurations)
+  align (align all LGADs 'horizontally')
+  circuitModules (simulate TDR circuit modules)
 Modules:
   # Draw sensors on the front or back side of the endcap
   drawSensors(face)
@@ -35,16 +43,17 @@ sensorLength = 42.6;
 sensorThick = 1;
 zOffset = 3000;
 diskSpacing = 20;
-nSensors = 3; // Number of sensors per module (in one row)
+nSensors = 1; // Number of sensors per module (in one row)
 channel = 21.8; // Half of the channel width
 
 // Configuration
-showCircuits = false;
+showCircuits = true;
 flat = false;
-inline = true;
-strips = false;
+inline = false;
+strips = true;
 wedges = true;
 align = true;
+circuitModules = true;
 
 // Endcap Parameters
 endcapOuterRadius = 1270;

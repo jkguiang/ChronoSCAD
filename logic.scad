@@ -9,11 +9,12 @@ module drawSensors(face, yParallel=true) {
 		nudge = (inc == 0 && !wedges) ? 0.25 : 0;
 		x = inc*(sensorHalfWidth+0.5)+nudge;
 		if (x <= endcapOuterRadius) {
-			correction1 = (inc != 0 && face == front && inline) ? sensorHalfWidth+0.5 : 0;
-			correction2 = (inc != 0 && face == back && inline) ? sensorHalfWidth+0.5 : 0;
+			correction = (inc != 0 && circuitModules) ? circuitWidth : 0;
+			correction1 = (inc != 0 && face == front && inline) ? sensorHalfWidth+0.5 : correction;  // Check one LGAD+circuit closer to origin
+			correction2 = (inc != 0 && face == back && inline) ? sensorHalfWidth+0.5 : correction;   // ...
 			if (inc%2 == 0) {
-				yMin = (x-correction1 <= endcapInnerRadius) ? pow(pow(endcapInnerRadius, 2)-pow(x-correction1,2), 0.5) : channelDisp;
-				yMax = pow(pow(endcapOuterRadius, 2)-pow(x+correction2+(sensorHalfWidth+circuitWidth),2), 0.5);
+				yMin = (x-correction1 <= endcapInnerRadius) ? pow(pow(endcapInnerRadius, 2)-pow(x-correction1, 2), 0.5) : channelDisp;
+				yMax = pow(pow(endcapOuterRadius, 2)-pow(x+correction2+(sensorHalfWidth), 2), 0.5);
 				// X-axis Placement
 				echo("QUAD",nQuad=0);
 				drawEvenQuadrants(x, yMax, yMin, sensorHalfWidth, face);
@@ -29,8 +30,8 @@ module drawSensors(face, yParallel=true) {
 				}			
 			}
 			else {
-				yMin = (x-correction2 <= endcapInnerRadius) ? pow(pow(endcapInnerRadius, 2)-pow(x-correction2,2), 0.5) : channelDisp;
-				yMax = pow(pow(endcapOuterRadius, 2)-pow(x+correction1+(sensorHalfWidth+circuitWidth),2), 0.5);
+				yMin = (x-correction2 <= endcapInnerRadius) ? pow(pow(endcapInnerRadius, 2)-pow(x-correction2, 2), 0.5) : channelDisp;
+				yMax = pow(pow(endcapOuterRadius, 2)-pow(x+correction1+(sensorHalfWidth), 2), 0.5);
 				// X Axis Placement
 				echo("QUAD", nQuad=2);
 				drawOddQuadrants(x, yMax, yMin, sensorHalfWidth, face);
@@ -51,7 +52,7 @@ module drawSensors(face, yParallel=true) {
 }
 
 module drawEvenQuadrants(x, yMax, yMin, sensorHalfWidth, face) {
-	yRoundStart = round(yMin/sensorLength)*(sensorLength+0.5);
+	yRoundStart = round(yMin/sensorLength)*(sensorLength+0.5)+0.5;
 	yAlignStart = (yRoundStart < yMin) ? yRoundStart+sensorLength+0.5 : yRoundStart;
 	yStart = (align) ? yAlignStart : yMin;
 	for (y=[yStart:(sensorLength+0.5)*nSensors:yMax]) {
@@ -61,7 +62,7 @@ module drawEvenQuadrants(x, yMax, yMin, sensorHalfWidth, face) {
 				echo("LGAD", x=x, y=thisY);
 				if (face == front) {
 					SensorHalfLeft(x,thisY,face);
-					SensorHalfRight(-x-sensorHalfWidth,-thisY-sensorLength,face);				
+					SensorHalfRight(-x-sensorHalfWidth,-thisY-sensorLength,face);
 				}
 				else {
 					SensorHalfRight(x,thisY,face);
@@ -73,7 +74,7 @@ module drawEvenQuadrants(x, yMax, yMin, sensorHalfWidth, face) {
 }
 
 module drawOddQuadrants(x, yMax, yMin, sensorHalfWidth, face) {
-	yRoundStart = round(yMin/sensorLength)*(sensorLength+0.5);
+	yRoundStart = round(yMin/sensorLength)*(sensorLength+0.5)+0.5;
 	yAlignStart = (yRoundStart < yMin) ? yRoundStart+sensorLength+0.5 : yRoundStart;
 	yStart = (align) ? yAlignStart : yMin;
 	for (y=[yStart:(sensorLength+0.5)*nSensors:yMax]) {
@@ -83,11 +84,11 @@ module drawOddQuadrants(x, yMax, yMin, sensorHalfWidth, face) {
 				echo("LGAD", x=x, y=thisY);
 				if (face == front) {
 					SensorHalfRight(x,thisY,face);
-					SensorHalfLeft(-x-sensorHalfWidth,-thisY-sensorLength,face);				
+					SensorHalfLeft(-x-sensorHalfWidth,-thisY-sensorLength,face);
 				}
 				else {
 					SensorHalfLeft(x,thisY,face);
-					SensorHalfRight(-x-sensorHalfWidth,-thisY-sensorLength,face);	
+					SensorHalfRight(-x-sensorHalfWidth,-thisY-sensorLength,face);
 				}
 			}
 		}
