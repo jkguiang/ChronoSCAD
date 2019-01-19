@@ -37,7 +37,7 @@ module LGAD(x,y) {
 }
 module Circuitry(x,y) {
 	if (showCircuits) {
-		color("LightSkyBlue")
+		color("Khaki")
 		translate([x,y,(endcapThick/2)])
 		cube([circuitWidth, sensorLength, sensorThick]);			
 	}
@@ -72,10 +72,12 @@ module EndcapFace(face) {
 	difference() {
 		cylinder(h=endcapThick/2,         // Endcap
 		         d=(endcapOuterRadius*2), 
-		         center=true);
+		         center=true,
+				 $fn=100);
 		cylinder(h=(endcapThick/2+1),     // Beampipe
 		         d=(endcapInnerRadius*2), 
-		         center=true);
+		         center=true,
+				 $fn=100);
 	}
 }
 // Endcap
