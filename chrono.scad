@@ -20,7 +20,7 @@ Configuration (true, false)
   strips (allow for single-LGAD strips along diameter)
   wedges (toggle between D and Wedge configurations)
   align (align all LGADs 'horizontally')
-  circuitModules (simulate TDR circuit modules)
+  circuitModules (reproduce TDR circuit modules)
 Modules:
   # Draw sensors on the front or back side of the endcap
   drawSensors(face)
@@ -43,8 +43,9 @@ sensorLength = 42.6;
 sensorThick = 1;
 zOffset = 3000;
 diskSpacing = 20;
-nSensors = 1; // Number of sensors per module (in one row)
+nSensors = 3; // Number of sensors per module (in one row)
 channel = 21.8; // Half of the channel width
+wedgeChannel = 16.4;
 
 // Configuration
 showCircuits = true;
