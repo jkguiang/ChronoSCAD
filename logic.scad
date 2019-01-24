@@ -2,7 +2,8 @@
 module drawSensors(face, yParallel=true) {
 	sensorHalfWidth = lgadWidth+circuitWidth;
 	zDisp = (face == 1) ? 0 : -(sensorThick+endcapThick);
-	loopStart = (!strips && face == front && (wedges || yParallel)) ? 1 : 0;
+	skip = (circuitModules && face == back) ? 1 : 0;
+	loopStart = (!strips && face == front && (wedges || yParallel)) ? 1 : 0+skip;
 	channelDisp = (wedges || yParallel) ? 0 : channel;
 	translate([0,0,zDisp])
 	for(inc=[loopStart:1:endcapOuterRadius]) {
