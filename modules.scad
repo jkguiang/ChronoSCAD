@@ -5,15 +5,15 @@ back = -1;
 // Utility Modules
 module xAxis() {
 	color("Red", 0.75)
-	cube([1000, 0.5, endcapThick*1.1], center=true);
+	cube([3000, 0.5, endcapThick*1.1], center=true);
 }
 module yAxis() {
 	color("Yellow", 0.75)
-	cube([0.5, 1000, endcapThick*1.1], center=true);
+	cube([0.5, 3000, endcapThick*1.1], center=true);
 }
 module zAxis() {
 	color("Blue")
-	cylinder(h=1000, d=1, center=true);
+	cylinder(h=3000, d=1, center=true);
 }
 module axes() {
 	union() {
@@ -54,13 +54,13 @@ module Sensor(x,y) {
 module SensorHalfRight(x,y,side) {
 	union() {
 		Circuitry(x,y);
-		color((side == 1) ? "MediumBlue" : "ForestGreen")
+		color((side == front) ? "MediumBlue" : "ForestGreen")
 		LGAD(x+circuitWidth,y);
 	}	
 }
 module SensorHalfLeft(x,y,side) {
 	union() {
-		color((side == 1) ? "RoyalBlue" : "DarkSeaGreen")
+		color((side == front) ? "RoyalBlue" : "DarkSeaGreen")
 		LGAD(x,y);
 		Circuitry(x+lgadWidth,y);
 	}	
