@@ -10,11 +10,11 @@ module drawSensors(face, yParallel=true) {
 		x = inc*(sensorHalfWidth+0.5)+nudge+wedgeChannel;
 		if (x <= endcapOuterRadius) {
 			correction = (inc != 0 && circuitModules) ? circuitWidth : 0;
-			frontCorrection = (inc != 0 && face == front && inline) ? sensorHalfWidth+0.5+correction : correction; // Correction nearer/farther to origin
-			backCorrection = (inc != 0 && face == back && inline) ? sensorHalfWidth+0.5+correction : correction;   // ...
+			frontCorrection = (inc != 0 && face == front && blocks) ? sensorHalfWidth+0.5+correction : correction; // Correction nearer/farther to origin
+			backCorrection = (inc != 0 && face == back && blocks) ? sensorHalfWidth+0.5+correction : correction;   // ...
 			if (inc%2 == 0) {
-				xNear = (circuitModules && !inline && face == front) ? x : x-frontCorrection;
-				xFar = (circuitModules && !inline && face == back) ? x+sensorHalfWidth : x+backCorrection+sensorHalfWidth;
+				xNear = (circuitModules && !blocks && face == front) ? x : x-frontCorrection;
+				xFar = (circuitModules && !blocks && face == back) ? x+sensorHalfWidth : x+backCorrection+sensorHalfWidth;
 				yMin = (xNear <= endcapInnerRadius) ? pow(pow(endcapInnerRadius, 2)-pow(xNear, 2), 0.5) : channelDisp;
 				yMax = pow(pow(endcapOuterRadius, 2)-pow(xFar, 2), 0.5);
 				// X-axis Placement
@@ -32,8 +32,8 @@ module drawSensors(face, yParallel=true) {
 				}			
 			}
 			else {
-				xNear = (circuitModules && !inline && face == back) ? x : x-backCorrection;
-				xFar = (circuitModules && !inline && face == front) ? x+sensorHalfWidth : x+frontCorrection+sensorHalfWidth;
+				xNear = (circuitModules && !blocks && face == back) ? x : x-backCorrection;
+				xFar = (circuitModules && !blocks && face == front) ? x+sensorHalfWidth : x+frontCorrection+sensorHalfWidth;
 				yMin = (xNear <= endcapInnerRadius) ? pow(pow(endcapInnerRadius, 2)-pow(xNear, 2), 0.5) : channelDisp;
 				yMax = pow(pow(endcapOuterRadius, 2)-pow(xFar, 2), 0.5);
 				// X Axis Placement

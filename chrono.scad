@@ -16,7 +16,7 @@ Legend:
 Configuration (true, false)
   showCircuits (draw circuits)
   flat (toggle 2D/3D LGADs)
-  inline (force LGADs to be inline blocks)
+  blocks (force LGADs to be inline blocks)
   strips (allow for single-LGAD strips along diameter)
   wedges (toggle between D and Wedge configurations)
   align (align all LGADs 'horizontally')
@@ -38,19 +38,19 @@ Modules:
 
 // Endcap Sensor Parameters
 lgadWidth = 21.8;
-circuitWidth = 20.5;
+circuitWidth = 20.4;
 sensorLength = 42.6;
 sensorThick = 1;
 zOffset = 3000;
 diskSpacing = 20;
 nSensors = 3; // Number of sensors per module (in one row)
 channel = 21.8; // Half of the channel width
-wedgeChannel = 16.4;
+wedgeChannel = 18.5;
 
 // Configuration
 showCircuits = true;
 flat = false;
-inline = false;
+blocks = false;
 strips = true;
 wedges = true;
 align = true;
