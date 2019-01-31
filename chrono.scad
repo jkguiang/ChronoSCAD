@@ -38,17 +38,19 @@ Modules:
 
 // Endcap Sensor Parameters
 lgadWidth = 21.8;
-circuitWidth = 20.4;
+lgadXSep = 0.25;
+lgadYSep = 1.0;
+circuitWidth = 41.85/2-lgadXSep/2;
 sensorLength = 42.6;
 sensorThick = 1;
 zOffset = 3000;
 diskSpacing = 20;
 nSensors = 3; // Number of sensors per module (in one row)
 channel = 21.8; // Half of the channel width
-wedgeChannel = 18.5;
+wedgeChannel = 17.75;
 
 // Configuration
-showCircuits = true;
+showCircuits = false;
 flat = false;
 blocks = false;
 strips = true;
@@ -82,8 +84,8 @@ module drawDetector(side) {
 	Detector();
 	if (wedges) {
 		//rotate([0,0,45])
-		translate([0,0,side*(zOffset+diskSpacing)])
-		Detector();				
+		//translate([0,0,side*(zOffset+diskSpacing)])
+		//Detector();				
 	}
 	else {
 		//rotate([0,0,90])
@@ -152,11 +154,9 @@ module BTL() {
 	//drawBarrel();
 }
 
-ETLTop();
+//ETLTop();
 //ETLBottom();
 //BTL();
-//renderLayer = 0;
-//drawLayer(renderLayer);
-//drawLayer(1);
-//drawLayer(2);
-//drawLayer(3);
+
+renderLayer = 0;
+drawLayer(renderLayer);
